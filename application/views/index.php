@@ -1,7 +1,9 @@
 <?php include("header.php"); ?>
 
+<div class="main">
+<h2 class="text-white">PARKING SPACE</h2>
 
-<h1> hello codeigniter 3.1.11 </h1>
-
+</div>
+</div>
 
 <?php include("footer.php"); ?>
