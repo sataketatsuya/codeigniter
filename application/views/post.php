@@ -50,7 +50,7 @@ function e(string $text): string
 			</div>
 		<?php endif; ?>
 		<p class="text_message">こちらはデモ用の掲示板なので、自由に書き込んでください。</p>
-		<form action="/postcontroller/register" method="post">
+		<form action="/PostController/register" method="post">
 			<div class="form-group">
 				<label for="user_name">ユーザ名</label>
 				<input type="text" id="user_name" name="user_name" class="form-control" value="<?= $edit_post ? e($edit_post['user_name']) : null ?>">
@@ -89,7 +89,7 @@ function e(string $text): string
 								</div>
 								<div class="col-lg-6">
 									<div class="d-flex justify-content-lg-end">
-										<a href="/postcontroller?post_id=<?= e($post['post_id']) ?>" class="btn btn-info">編集</a>
+										<a href="/PostController?post_id=<?= e($post['post_id']) ?>" class="btn btn-info">編集</a>
 										<button class="btn btn-danger" onclick="return destroyPostId(<?= e($post['post_id']) ?>)">削除</button>
 									</div>
 								</div>
@@ -103,7 +103,7 @@ function e(string $text): string
 					</div>
 				</article>
 			<?php endforeach; ?>
-			<form action="/postcontroller/destroy/:post_id" method="post" id="form_post_destroy"></form>
+			<form action="/PostController/destroy/:post_id" method="post" id="form_post_destroy"></form>
 		</section>
 	</div>
 
