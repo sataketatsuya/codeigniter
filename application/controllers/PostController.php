@@ -12,8 +12,8 @@ class PostController extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library('session');
-		$this->load->model('postModel');
 		$this->load->library('form_validation');
+		$this->load->model('PostModel');
 		$this->load->helper('url');
 	}
 

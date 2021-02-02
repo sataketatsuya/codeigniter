@@ -1,6 +1,10 @@
 <?php
 class PostModel extends CI_Model
 {
+	public $user_name = '';
+	public $title = '';
+	public $message = '';
+
 	/**
 	 * コンストラクタ
 	 */
@@ -35,7 +39,11 @@ class PostModel extends CI_Model
 	 */
 	public function insert_post(array $input): void
 	{
-		$this->db->insert('post', $input);
+		$this->user_name = $input['user_name'];
+		$this->title = $input['title'];
+		$this->message = $input['message'];
+
+		$this->db->insert('post', $this);
 	}
 
 	/**
@@ -46,8 +54,12 @@ class PostModel extends CI_Model
 	 */
 	public function edit_post(array $input): void
 	{
-        $this->db->where('post_id', $input['post_id']);
-        $this->db->update('post', $input);
+		$this->user_name = $input['user_name'];
+		$this->title = $input['title'];
+		$this->message = $input['message'];
+
+		$this->db->where('post_id', $input['post_id']);
+        $this->db->update('post', $this);
 	}
 
 	/**
