@@ -28,6 +28,7 @@ class PostController extends CI_Controller
 
 		$mode_success = $this->session->success;
 		$mode_failure = $this->session->failure;
+        $this->session_reset();
 		$paramaters = $this->input->get();
 
 		$edit_post = isset($paramaters['post_id']) ? $data['posts'][$paramaters['post_id']-1] : null;
@@ -50,7 +51,7 @@ class PostController extends CI_Controller
 		$this->set_validation();
 		if (!$this->form_validation->run()) {
 			$this->session->set_flashdata('failure', validation_errors());
-			redirect('https://codeigniter-post-app.herokuapp.com/postcontroller');
+			redirect('https://codeigniter-post-app.herokuapp.com');
 		} else {
 			$input = $this->input->post();
 			if (isset($input['post_id'])) {
@@ -60,7 +61,7 @@ class PostController extends CI_Controller
 			}
 
 			$this->session->set_flashdata('success', '登録完了しました');
-			redirect('https://codeigniter-post-app.herokuapp.com/postcontroller');
+			redirect('https://codeigniter-post-app.herokuapp.com');
 		}
 	}
 
@@ -74,7 +75,7 @@ class PostController extends CI_Controller
 	{
 		$this->PostModel->destroy_post($post_id);
 		$this->session->set_flashdata('success', '削除しました');
-		redirect('https://codeigniter-post-app.herokuapp.com/postcontroller');
+		redirect('https://codeigniter-post-app.herokuapp.com');
 	}
 
 	/**
@@ -84,8 +85,20 @@ class PostController extends CI_Controller
 	 */
 	public function set_validation(): void
 	{
+		$this->session_reset();
 		$this->form_validation->set_rules('user_name', 'ユーザ名', 'trim|required|max_length[255]');
 		$this->form_validation->set_rules('title', '表示名', 'trim|required|max_length[255]');
 		$this->form_validation->set_rules('message', 'ひと言メッセージ', 'trim|required|max_length[99999]');
+	}
+
+	/**
+	 * セッションリセット
+	 *
+	 * @return void
+	 */
+	public function session_reset(): void
+	{
+		$this->session->remove('failure');
+		$this->session->remove('success');
 	}
 }
