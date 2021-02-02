@@ -65,10 +65,10 @@ class PostModel extends CI_Model
 	/**
 	 * 投稿データ削除（論理削除）
 	 *
-	 * @param array $post_id
+	 * @param int $post_id
 	 * @return void
 	 */
-	public function destroy_post(array $post_id): void
+	public function destroy_post(int $post_id): void
 	{
         $input = [
 			'deleted_at' => date('Y-m-d H:i:s'),

@@ -28,10 +28,12 @@ class PostController extends CI_Controller
 
 		$mode_success = $this->session->success;
 		$mode_failure = $this->session->failure;
-        $this->session_reset();
+		if ($this->session->has_userdata('success') || $this->session->has_userdata('failure')) {
+            $this->session_reset();
+		}
 		$paramaters = $this->input->get();
 
-		$edit_post = isset($paramaters['post_id']) ? $data['posts'][$paramaters['post_id']-1] : null;
+		$edit_post = isset($paramaters['post_id']) ? $data['posts'][$paramaters['post_id']] : null;
 
 		$this->load->view('post', [
 			'posts' => $data['posts'],
@@ -98,7 +100,7 @@ class PostController extends CI_Controller
 	 */
 	public function session_reset(): void
 	{
-		$this->session->flashdata('failure');
-		$this->session->flashdata('success');
+		$this->session->set_userdata('failure');
+		$this->session->set_userdata('success');
 	}
 }
