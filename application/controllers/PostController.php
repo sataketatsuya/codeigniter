@@ -50,7 +50,7 @@ class PostController extends CI_Controller
 		$this->set_validation();
 		if (!$this->form_validation->run()) {
 			$this->session->set_flashdata('failure', validation_errors());
-			redirect('http://localhost:8000/postcontroller');
+			redirect('https://codeigniter-post-app.herokuapp.com/postcontroller');
 		} else {
 			$input = $this->input->post();
 			if (isset($input['post_id'])) {
@@ -60,7 +60,7 @@ class PostController extends CI_Controller
 			}
 
 			$this->session->set_flashdata('success', '登録完了しました');
-			redirect('http://localhost:8000/postcontroller');
+			redirect('https://codeigniter-post-app.herokuapp.com/postcontroller');
 		}
 	}
 
@@ -74,7 +74,7 @@ class PostController extends CI_Controller
 	{
 		$this->postmodel->destroy_post($post_id);
 		$this->session->set_flashdata('success', '削除しました');
-		redirect('http://localhost:8000/postcontroller');
+		redirect('https://codeigniter-post-app.herokuapp.com/postcontroller');
 	}
 
 	/**
