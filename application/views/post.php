@@ -1,5 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+function e($text)
+{
+    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,23 +38,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 
 	<div class="container">
+		<?php if(isset($mode_failure)): ?>
+			<div class="alert alert-danger" role="alert">
+				<?= $mode_failure ?>
+			</div>
+		<?php endif; ?>
 		<?php if(isset($mode_success)): ?>
 			<div class="alert alert-success" role="alert">
-				登録完了しました
+				<?= $mode_success ?>
 			</div>
 		<?php endif; ?>
 		<p class="text_message">こちらはデモ用の掲示板なので、自由に書き込んでください。</p>
-		<form action="/postcontroller/create" method="post">
+		<form action="/postcontroller/register" method="post">
 		  	<div class="form-group">
 			    <label for="title">表示名</label>
-				<input type="text" id="title" name="title" class="form-control">
+				<input type="text" id="title" name="title" class="form-control" value="<?= $edit_post ? e($edit_post['title']) : null ?>">
 			<small class="form-text text-muted">掲示板で表示されるユーザ名を入力してください</small>
 		  </div>
 		  <div class="form-group">
 				<label for="message">ひと言メッセージ</label>
-				<textarea class="form-control" id="message" name="message" rows="3"></textarea>
+				<textarea class="form-control" id="message" name="message" rows="3"><?= $edit_post ? e($edit_post['message']) : null ?></textarea>
 				<small class="form-text text-muted">ひと言どうぞ</small>
 		  </div>
+		  <?php if ($edit_post): ?>
+			<input type="hidden" name="post_id" value="<?= e($edit_post['post_id']) ?>">
+		  <?php endif; ?>
 		  <button type="submit" class="btn btn-primary">書き込む</button>
 		</form>
 		<hr>
@@ -60,33 +73,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="card-body">
 							<div class="row">
 								<div class="col-lg-3">
-									<h2><?= $post['title'] ?></h2>
+									<h2><?= e($post['title']) ?></h2>
 								</div>
 								<div class="col-lg-3">
-									<p><?= $post['created_at'] ?></p>
+									<p><?= e($post['created_at']) ?></p>
 								</div>
 								<div class="col-lg-6">
 									<div class="d-flex justify-content-lg-end">
-										<div class="alert alert-secondary" role="alert">
-											<a href="/postcontroller/edit/<?= $post['post_id'] ?>" class="alert-link">編集</a>
-										</div>
-										<div class="alert alert-danger" role="alert">
-											<a href="#" class="alert-link">削除</a>
-										</div>
+										<a href="/postcontroller?post_id=<?= e($post['post_id']) ?>" class="btn btn-info">編集</a>
+										<button class="btn btn-danger" onclick="return destroyPostId(<?= e($post['post_id']) ?>)">削除</button>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-12">
-									<p><?= $post['message'] ?></p>
+									<p><?= e($post['message']) ?></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</article>
 			<?php endforeach; ?>
+			<form action="/postcontroller/destroy/:post_id" method="post" id="form_post_destroy"></form>
 		</section>
 	</div>
+
+	<script>
+	function destroyPostId(post_id) {
+        alert('対象の一言メッセージを削除します、よろしいでしょうか？');
+		let form = document.getElementById('form_post_destroy');
+        let action = form.getAttribute('action').replace(':post_id', post_id);
+		form.setAttribute('action', action);
+        form.submit();
+	}
+	</script>
 
 </body>
 </html>
