@@ -98,7 +98,7 @@ class PostController extends CI_Controller
 	 */
 	public function session_reset(): void
 	{
-		$this->session->remove('failure');
-		$this->session->remove('success');
+		$this->session->flashdata('failure');
+		$this->session->flashdata('success');
 	}
 }
