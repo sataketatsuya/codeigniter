@@ -5,6 +5,9 @@ use CodeIgniter\HTTP\IncomingRequest;
 
 class PostController extends CI_Controller
 {
+	/**
+	 * コンストラクタ
+	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -14,7 +17,12 @@ class PostController extends CI_Controller
 		$this->load->helper('url');
 	}
 
-	public function index()
+	/**
+	 * 一覧画面表示
+	 *
+	 * @return void
+	 */
+	public function index(): void
 	{
 		$data['posts'] = $this->postmodel->get_posts();
 
@@ -32,7 +40,12 @@ class PostController extends CI_Controller
 		]);
 	}
 
-	public function register()
+	/**
+	 * データベース登録
+	 *
+	 * @return void
+	 */
+	public function register(): void
 	{
 		$this->set_validation();
 		if (!$this->form_validation->run()) {
@@ -51,15 +64,27 @@ class PostController extends CI_Controller
 		}
 	}
 
-	public function destroy($post_id)
+	/**
+	 * データベース削除
+	 *
+	 * @param int $post_id
+	 * @return void
+	 */
+	public function destroy(int $post_id)
 	{
 		$this->postmodel->destroy_post($post_id);
 		$this->session->set_flashdata('success', '削除しました');
 		redirect('http://localhost:8000/postcontroller');
 	}
 
-	public function set_validation()
+	/**
+	 * バリデーションセット
+	 *
+	 * @return void
+	 */
+	public function set_validation(): void
 	{
+		$this->form_validation->set_rules('user_name', 'ユーザ名', 'trim|required|max_length[255]');
 		$this->form_validation->set_rules('title', '表示名', 'trim|required|max_length[255]');
 		$this->form_validation->set_rules('message', 'ひと言メッセージ', 'trim|required|max_length[99999]');
 	}

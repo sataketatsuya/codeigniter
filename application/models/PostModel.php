@@ -1,12 +1,20 @@
 <?php
 class PostModel extends CI_Model
 {
+	/**
+	 * コンストラクタ
+	 */
 	public function __construct()
 	{
         $this->load->database();
 	}
 
-    public function get_posts()
+	/**
+	 * 投稿データ取得
+	 *
+	 * @return array|false
+	 */
+    public function get_posts(): array
     {
 		$query = $this->db->get('post');
 
@@ -19,20 +27,36 @@ class PostModel extends CI_Model
 		}
 	}
 
-	public function insert_post($input)
+	/**
+	 * 投稿データ挿入
+	 *
+	 * @param array $input
+	 * @return void
+	 */
+	public function insert_post(array $input): void
 	{
-        $input['user_id'] = 1;
 		$this->db->insert('post', $input);
 	}
 
-	public function edit_post($input)
+	/**
+	 * 投稿データ更新
+	 *
+	 * @param array $input
+	 * @return void
+	 */
+	public function edit_post(array $input): void
 	{
-		$input['user_id'] = 1;
         $this->db->where('post_id', $input['post_id']);
         $this->db->update('post', $input);
 	}
 
-	public function destroy_post($post_id)
+	/**
+	 * 投稿データ削除（論理削除）
+	 *
+	 * @param array $post_id
+	 * @return void
+	 */
+	public function destroy_post(array $post_id): void
 	{
         $input = [
 			'deleted_at' => date('Y-m-d H:i:s'),

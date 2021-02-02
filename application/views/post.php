@@ -1,11 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-function e($text)
+function e(string $text): string
 {
     return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 }
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -29,12 +30,12 @@ function e($text)
 </style>
 <body>
 	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-      <h5 class="my-0 mr-md-auto font-weight-normal">ひと言掲示板</h5>
-      <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="/login/index">ログイン</a>
-        <a class="p-2 text-dark" href="/register/index">新規登録</a>
-        <a class="p-2 text-dark" href="#">ログアウト</a>
-      </nav>
+		<h5 class="my-0 mr-md-auto font-weight-normal">ひと言掲示板</h5>
+		<nav class="my-2 my-md-0 mr-md-3">
+			<a class="p-2 text-dark" href="/login/index">ログイン</a>
+			<a class="p-2 text-dark" href="/register/index">新規登録</a>
+			<a class="p-2 text-dark" href="#">ログアウト</a>
+		</nav>
     </div>
 
 	<div class="container">
@@ -50,30 +51,38 @@ function e($text)
 		<?php endif; ?>
 		<p class="text_message">こちらはデモ用の掲示板なので、自由に書き込んでください。</p>
 		<form action="/postcontroller/register" method="post">
-		  	<div class="form-group">
-			    <label for="title">表示名</label>
+			<div class="form-group">
+				<label for="user_name">ユーザ名</label>
+				<input type="text" id="user_name" name="user_name" class="form-control" value="<?= $edit_post ? e($edit_post['user_name']) : null ?>">
+				<small class="form-text text-muted">掲示板で表示されるユーザ名を入力してください</small>
+			</div>
+			<div class="form-group">
+				<label for="title">タイトル</label>
 				<input type="text" id="title" name="title" class="form-control" value="<?= $edit_post ? e($edit_post['title']) : null ?>">
-			<small class="form-text text-muted">掲示板で表示されるユーザ名を入力してください</small>
-		  </div>
-		  <div class="form-group">
-				<label for="message">ひと言メッセージ</label>
-				<textarea class="form-control" id="message" name="message" rows="3"><?= $edit_post ? e($edit_post['message']) : null ?></textarea>
-				<small class="form-text text-muted">ひと言どうぞ</small>
-		  </div>
-		  <?php if ($edit_post): ?>
-			<input type="hidden" name="post_id" value="<?= e($edit_post['post_id']) ?>">
-		  <?php endif; ?>
-		  <button type="submit" class="btn btn-primary">書き込む</button>
+				<small class="form-text text-muted">掲示板で表示されるタイトルを入力してください</small>
+			</div>
+			<div class="form-group">
+					<label for="message">ひと言メッセージ</label>
+					<textarea class="form-control" id="message" name="message" rows="3"><?= $edit_post ? e($edit_post['message']) : null ?></textarea>
+					<small class="form-text text-muted">ひと言どうぞ</small>
+			</div>
+			<?php if ($edit_post): ?>
+				<input type="hidden" name="post_id" value="<?= e($edit_post['post_id']) ?>">
+			<?php endif; ?>
+			<button type="submit" class="btn btn-primary">書き込む</button>
 		</form>
 		<hr>
 		<section id="section_area">
 			<?php foreach($posts as $post): ?>
 				<article class="article">
 					<div class="card">
+						<div class="card-header">
+							<h3><?= e($post['title']) ?></h3>
+						</div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-lg-3">
-									<h2><?= e($post['title']) ?></h2>
+									<p><?= e($post['user_name']) ?>さん</p>
 								</div>
 								<div class="col-lg-3">
 									<p><?= e($post['created_at']) ?></p>
