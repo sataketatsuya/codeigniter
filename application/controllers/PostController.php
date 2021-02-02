@@ -24,7 +24,7 @@ class PostController extends CI_Controller
 	 */
 	public function index(): void
 	{
-		$data['posts'] = $this->postmodel->get_posts();
+		$data['posts'] = $this->postModel->get_posts();
 
 		$mode_success = $this->session->success;
 		$mode_failure = $this->session->failure;
@@ -54,9 +54,9 @@ class PostController extends CI_Controller
 		} else {
 			$input = $this->input->post();
 			if (isset($input['post_id'])) {
-				$this->postmodel->edit_post($input);
+				$this->postModel->edit_post($input);
 			} else {
-				$this->postmodel->insert_post($input);
+				$this->postModel->insert_post($input);
 			}
 
 			$this->session->set_flashdata('success', '登録完了しました');
@@ -72,7 +72,7 @@ class PostController extends CI_Controller
 	 */
 	public function destroy(int $post_id)
 	{
-		$this->postmodel->destroy_post($post_id);
+		$this->postModel->destroy_post($post_id);
 		$this->session->set_flashdata('success', '削除しました');
 		redirect('https://codeigniter-post-app.herokuapp.com/postcontroller');
 	}
