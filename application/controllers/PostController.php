@@ -11,12 +11,13 @@ class PostController extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->dbforge->create_database('post_app');
-		$this->dbforge->create_table('post', TRUE);
+        $this->load->dbforge();
 		$this->load->library('session');
 		$this->load->model('PostModel');
 		$this->load->library('form_validation');
 		$this->load->helper('url');
+		$this->dbforge->create_database('post_app');
+		$this->dbforge->create_table('post', TRUE);
 	}
 
 	/**
