@@ -16,7 +16,7 @@ class PostModel extends CI_Model
 	/**
 	 * 投稿データ取得
 	 *
-	 * @return array|false
+	 * @return array
 	 */
     public function get_posts(): array
     {
@@ -27,7 +27,7 @@ class PostModel extends CI_Model
 
             return $result;
 		} else {
-            return false;
+            return [];
 		}
 	}
 
