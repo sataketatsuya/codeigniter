@@ -54,7 +54,7 @@ class PostModel extends CI_Model
      */
     public function next_id(): int
     {
-        $query = $this->db->query('SELECT post_id FROM posts ORDER BY post_id DESC LIMIT 1');
+        $query = $this->db->query('SELECT post_id FROM post ORDER BY post_id DESC LIMIT 1');
         if ($query->num_rows() > 0) {
             $post = $query->result();
             return $post[0]->post_id + 1;
