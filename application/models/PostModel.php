@@ -74,6 +74,7 @@ class PostModel extends CI_Model
         $this->user_name = $input['user_name'];
         $this->title = $input['title'];
         $this->message = $input['message'];
+        $this->updated_at = date('Y-m-d H:i:s');
 
         $this->db->where('post_id', $input['post_id']);
         $this->db->update('post', $this);
