@@ -33,7 +33,7 @@ class PostController extends CI_Controller
         }
         $paramaters = $this->input->get();
 
-        $edit_post = isset($paramaters['post_id']) ? $data['posts'][$paramaters['post_id']] : null;
+        $edit_post = isset($paramaters['post_id']) ? $data['posts'][$paramaters['post_id']-1] : null;
 
         $this->load->view('post', [
             'posts' => $data['posts'],
